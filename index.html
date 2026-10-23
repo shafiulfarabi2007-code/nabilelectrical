@@ -102,8 +102,19 @@
             #printable-pdf-container, #printable-pdf-container * {
                 visibility: visible;
             }
+            #printable-pdf-container h2 {
+        font-size: 20px !important; /* Increased main title size */
+        font-weight: 800 !important;
+        margin-bottom: 2px !important;
+    }
+
+    #printable-pdf-container h3 {
+        font-size: 16.5px !important; /* Increased subtitle/checklist headline size */
+        font-weight: 700 !important;
+        margin-top: 2px !important;
 
             #printable-pdf-container {
+
                 display: block !important;
                 position: absolute;
                 left: 0;
@@ -152,7 +163,8 @@
                 color: #0369a1 !important;
                 font-weight: 700 !important;
                 font-size: 20px !important;
-                padding: 1.5px 3px !important;
+                padding: 3px 4px !important;
+                letter-spacing: 0.3px;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
