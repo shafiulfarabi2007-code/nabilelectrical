@@ -102,13 +102,13 @@
             #printable-pdf-container, #printable-pdf-container * {
                 visibility: visible;
             }
-            #printable-pdf-container h2 {
+            #printable-pdf-container h1 {
         font-size: 20px !important; /* Increased main title size */
-        font-weight: 800 !important;
+        font-weight: 1000 !important;
         margin-bottom: 2px !important;
     }
 
-    #printable-pdf-container h3 {
+    #printable-pdf-container h2 {
         font-size: 16.5px !important; /* Increased subtitle/checklist headline size */
         font-weight: 700 !important;
         margin-top: 2px !important;
@@ -124,6 +124,18 @@
                 background: #ffffff;
                 font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
             }
+        .pdf-meta-table {
+                width: 100% !important;
+                margin-bottom: 5px !important;
+                border-collapse: collapse !important;
+                font-size: 15px !important;
+                color: #1e293b !important;
+                font-weight: 600 !important;
+            }
+
+            .pdf-meta-table td {
+                border: none !important;
+                padding: 1px 0 !important;
 
             /* Clean Minimal Table Styling */
             .pdf-minimal-table {
@@ -155,7 +167,7 @@
                 font-size: 16px !important; /* Prominent question text */
                 font-weight: 600;
                 line-height: 1.12 !important;
-                padding-right: 4px
+                padding-right: 3.5px
             }
 
             .pdf-category-row {
