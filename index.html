@@ -92,7 +92,7 @@
             }
 
             body * {
-                visibility: hidden;
+                visibility: hidden !important;
             }
 
             .vector-bg, header, form, footer, .no-print {
@@ -100,23 +100,23 @@
             }
 
             #printable-pdf-container, #printable-pdf-container * {
-                visibility: visible;
+                visibility: visible !important;
             }
 
             #printable-pdf-container {
                 display: block !important;
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                color: #0f172a;
-                background: #ffffff;
-                font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                color: #0f172a !important;
+                background: #ffffff !important;
+                font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
             }
 
             #printable-pdf-container h2 {
-                font-size: 16px !important;
-                font-weight: 800 !important;
+                font-size: 20px !important;
+                font-weight: 1000 !important;
                 color: #0284c7 !important;
                 margin: 0 !important;
                 line-height: 1.1;
@@ -129,7 +129,7 @@
             }
 
             #printable-pdf-container h3 {
-                font-size: 16px !important;
+                font-size: 16.5px !important;
                 font-weight: 700 !important;
                 color: #0f172a !important;
                 margin: 2px 0 !important;
@@ -141,7 +141,7 @@
                 border-collapse: collapse !important;
                 font-size: 16px !important;
                 color: #1e293b !important;
-                font-weight: 700 !important;
+                font-weight: 900 !important;
             }
 
             .pdf-meta-table td {
@@ -151,35 +151,35 @@
 
             /* Clean Minimal Table Styling */
             .pdf-minimal-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: fixed;
+                width: 100% !important;
+                border-collapse: collapse !important;
+                table-layout: fixed !important;
             }
 
             .pdf-minimal-table th {
                 border-bottom: 1.5px solid #0284c7 !important;
                 padding: 2px 3px !important;
-                font-size: 16px !important;
-                text-align: left;
+                font-size: 15px !important;
+                text-align: left !important;
                 color: #0369a1 !important;
                 background-color: #f0f9ff !important;
-                font-weight: 700;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                font-weight: 700 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
 
             .pdf-minimal-table td {
                 border-bottom: 1px solid #e2e8f0 !important;
                 padding: 1.2px 1px !important;
-                vertical-align: middle;
-                word-wrap: break-word;
+                vertical-align: middle !important;
+                word-wrap: break-word !important;
             }
 
             .question-text-cell {
                 font-size: 16px !important;
-                font-weight: 600;
-                line-height: 1.12 !important;
-                padding-right: 3.5px;
+                font-weight: 600 !important;
+                line-height: 1.15 !important;
+                padding-right: 3.5px !important;
             }
 
             .pdf-category-row {
@@ -189,47 +189,47 @@
                 font-size: 16px !important;
                 line-height: 1.12 !important;
                 padding: 3px 4px !important;
-                letter-spacing: 0.3px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                letter-spacing: 0.3px !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
 
             .comment-cell {
-                display: block;
-                word-break: break-word;
-                white-space: pre-wrap;
+                display: block !important;
+                word-break: break-word !important;
+                white-space: pre-wrap !important;
                 line-height: 1.12 !important;
             }
 
             .checkbox-symbol {
-                font-size: 16px;
-                font-weight: bold;
-                padding-left: 1px;
+                font-size: 15px !important;
+                font-weight: bold !important;
+                padding-left: 1px !important;
             }
 
             /* Signature Section */
             .signature-container {
-                margin-top: 16px;
-                display: flex;
-                justify-content: flex-end;
-                gap: 36px;
-                font-size: 16px;
-                font-weight: 700;
-                color: #1e293b;
+                margin-top: 16px !important;
+                display: flex !important;
+                justify-content: flex-end !important;
+                gap: 36px !important;
+                font-size: 16px !important;
+                font-weight: 700 !important;
+                color: #1e293b !important;
             }
 
             .signature-box {
-                text-align: center;
-                width: 150px;
+                text-align: center !important;
+                width: 150px !important;
             }
 
             .signature-space {
-                height: 36px;
+                height: 36px !important;
             }
 
             .signature-line {
-                border-top: 1px dotted #475569;
-                padding-top: 3px;
+                border-top: 1px dotted #475569 !important;
+                padding-top: 3px !important;
             }
         }
     </style>
@@ -560,7 +560,7 @@
                 } else if (textLength > 80) {
                     cell.style.fontSize = '8.2px';
                 } else {
-                    cell.style.fontSize = '9.5px';
+                    cell.style.fontSize = '12px';
                 }
             });
         }
