@@ -102,19 +102,8 @@
             #printable-pdf-container, #printable-pdf-container * {
                 visibility: visible;
             }
-            #printable-pdf-container h1 {
-        font-size: 20px !important; /* Increased main title size */
-        font-weight: 1000 !important;
-        margin-bottom: 2px !important;
-    }
-
-    #printable-pdf-container h2 {
-        font-size: 16.5px !important; /* Increased subtitle/checklist headline size */
-        font-weight: 700 !important;
-        margin-top: 2px !important;
 
             #printable-pdf-container {
-
                 display: block !important;
                 position: absolute;
                 left: 0;
@@ -124,18 +113,41 @@
                 background: #ffffff;
                 font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
             }
-        .pdf-meta-table {
+
+            #printable-pdf-container h2 {
+                font-size: 20px !important;
+                font-weight: 1000 !important;
+                color: #0284c7 !important;
+                margin: 0 !important;
+                line-height: 1.1;
+            }
+
+            #printable-pdf-container p {
+                font-size: 16px !important;
+                color: #475569 !important;
+                margin: 1px 0 0 0 !important;
+            }
+
+            #printable-pdf-container h3 {
+                font-size: 16.5px !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                margin: 2px 0 !important;
+            }
+
+            .pdf-meta-table {
                 width: 100% !important;
                 margin-bottom: 5px !important;
                 border-collapse: collapse !important;
-                font-size: 15px !important;
+                font-size: 16px !important;
                 color: #1e293b !important;
-                font-weight: 600 !important;
+                font-weight: 900 !important;
             }
 
             .pdf-meta-table td {
                 border: none !important;
-                padding: 1px 0 !important;
+                padding: 3px 0 !important;
+            }
 
             /* Clean Minimal Table Styling */
             .pdf-minimal-table {
@@ -158,24 +170,24 @@
 
             .pdf-minimal-table td {
                 border-bottom: 1px solid #e2e8f0 !important;
-                padding: 1.2px 1px !important; /* Extremely optimized compact padding */
+                padding: 1.2px 1px !important;
                 vertical-align: middle;
                 word-wrap: break-word;
             }
 
             .question-text-cell {
-                font-size: 16px !important; /* Prominent question text */
+                font-size: 16px !important;
                 font-weight: 600;
                 line-height: 0.9 !important;
-                padding-right: 3.5px
+                padding-right: 3.5px;
             }
 
             .pdf-category-row {
                 background-color: #e0f2fe !important;
                 color: #0369a1 !important;
                 font-weight: 900 !important;
-                font-size: 20px !important;
-                 line-height: 1.12 !important;
+                font-size: 16px !important;
+                line-height: 1.12 !important;
                 padding: 3px 4px !important;
                 letter-spacing: 0.3px;
                 -webkit-print-color-adjust: exact;
@@ -192,7 +204,7 @@
             .checkbox-symbol {
                 font-size: 15px;
                 font-weight: bold;
-              padding-left: 1px
+                padding-left: 1px;
             }
 
             /* Signature Section */
@@ -201,7 +213,7 @@
                 display: flex;
                 justify-content: flex-end;
                 gap: 36px;
-                font-size: 20px;
+                font-size: 16px;
                 font-weight: 700;
                 color: #1e293b;
             }
@@ -212,7 +224,7 @@
             }
 
             .signature-space {
-                height: 36px; /* Generous space for comfortable signature */
+                height: 36px;
             }
 
             .signature-line {
@@ -313,13 +325,13 @@
     <!-- Minimal PDF Document Printable Template -->
     <div id="printable-pdf-container">
         <div style="text-align: center; margin-bottom: 3px;">
-            <h2 style="font-size: 17px; font-weight: 900; color: #0284c7; margin: 0; line-height: 1.1;">নাবিল ইন্ডাষ্ট্রিয়াল পার্ক</h2>
-            <p style="font-size: 13px; margin: 1px 0 0 0; color: #475569;">ভেড়াপোড়া, পবা, রাজশাহী</p>
-            <h3 style="font-size: 13px; font-weight: 700; color: #0f172a; margin: 1px 0 0 0;">ইলেক্ট্রিক্যাল মেইন্টেনেন্স চেক লিস্ট</h3>
+            <h2>নাবিল ইন্ডাষ্ট্রিয়াল পার্ক</h2>
+            <p>ভেড়াপোড়া, পবা, রাজশাহী</p>
+            <h3>ইলেক্ট্রিক্যাল মেইন্টেনেন্স চেক লিস্ট</h3>
         </div>
 
         <!-- Meta Line -->
-        <table style="width: 100%; margin-bottom: 4px; border-collapse: collapse; font-size: 20px; font-weight: 900;color: #334155;">
+        <table class="pdf-meta-table">
             <tr>
                 <td style="border: none; padding: 3px 0; width: 40%;"><strong>প্রজেক্টের নাম:</strong> <span id="pdfProjectName"></span></td>
                 <td style="border: none; padding: 3px 0; width: 40%; text-align: center;"><strong>শিফট:</strong> <span id="pdfShift"></span></td>
