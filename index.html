@@ -207,20 +207,21 @@
                 padding-left: 1px !important;
             }
 
-            /* Signature Section */
+            /* Signature Section - Left & Right */
             .signature-container {
                 margin-top: 16px !important;
                 display: flex !important;
-                justify-content: flex-end !important;
-                gap: 36px !important;
+                justify-content: space-between !important;
+                align-items: flex-end !important;
                 font-size: 16px !important;
                 font-weight: 700 !important;
                 color: #1e293b !important;
+                padding: 0 20px !important;
             }
 
             .signature-box {
                 text-align: center !important;
-                width: 150px !important;
+                width: 180px !important;
             }
 
             .signature-space {
@@ -261,7 +262,7 @@
                 </h1>
                 <i class="fa-solid fa-bolt text-sky-500 text-2xl animate-pulse"></i>
             </div>
-            <p class="text-sky-800 font-bold text-lg">নাবিল ইন্ডাষ্ট্রিয়াল পার্ক, ভেড়াপোড়া, পবা, রাজশাহী</p>
+            <p class="text-sky-800 font-bold text-lg">নাবিল ইন্ডাষ্ট্রিয়াল পার্ক, <b>ভেড়াপোড়া, পবা</b>, রাজশাহী</p>
             <p class="text-slate-500 text-sm mt-1">ইলেক্ট্রিক্যাল মেইন্টেনেন্স চেক লিস্ট ফরম</p>
         </header>
 
@@ -270,9 +271,23 @@
             
             <!-- Metadata Entry Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-sky-50/60 rounded-xl border border-sky-100">
-                <div>
+                <div class="relative">
                     <label class="block text-sm font-bold text-sky-900 mb-1">প্রজেক্টের নাম <span class="text-red-500">*</span></label>
-                    <input type="text" id="projectName" required placeholder="প্রজেক্টের নাম লিখুন" class="w-full px-3 py-2 border border-sky-200 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none text-sm bg-white">
+                    <input type="text" id="projectName" required placeholder="প্রজেক্টের নাম লিখুন বা নির্বাচন করুন" autocomplete="off" class="w-full px-3 py-2 border border-sky-200 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none text-sm bg-white" onclick="toggleProjectDropdown(true)" onfocus="toggleProjectDropdown(true)">
+                    <div id="projectDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white border border-sky-200 rounded-lg shadow-lg z-50 max-h-48 overflow-y-auto">
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল অটো রাইস মিল -১')">১. নাবিল অটো রাইস মিল -১</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল অটো রাইস মিল -২')">২. নাবিল অটো রাইস মিল -২</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল অটো রাইস মিল -৩')">৩. নাবিল অটো রাইস মিল -৩</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল ফ্লাওয়ার মিল -১')">৪. নাবিল ফ্লাওয়ার মিল -১</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল ফ্লাওয়ার মিল -২')">৫. নাবিল ফ্লাওয়ার মিল -২</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল ফিড মিল -১')">৬. নাবিল ফিড মিল -১</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('আনোয়ারা ফিড মিল')">৭. আনোয়ারা ফিড মিল</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবা ফুডস লিমিটেড (ডাল মিল)')">৮. নাবা ফুডস লিমিটেড (ডাল মিল)</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল এডিবল ওয়েল মিল')">৯. নাবিল এডিবল ওয়েল মিল</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল কোল্ড স্টোরেজ')">১০. নাবিল কোল্ড স্টোরেজ</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium border-b border-slate-100" onclick="selectProject('নাবিল ট্রান্সপোর্ট')">১১. নাবিল ট্রান্সপোর্ট</div>
+                        <div class="p-2 hover:bg-sky-50 cursor-pointer text-sm font-medium" onclick="selectProject('শিমুল এন্টারপ্রাইজ')">১২. শিমুল এন্টারপ্রাইজ</div>
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-sky-900 mb-1">চেকলিস্টার নাম <span class="text-red-500">*</span></label>
@@ -326,7 +341,7 @@
     <div id="printable-pdf-container">
         <div style="text-align: center; margin-bottom: 3px;">
             <h2>নাবিল ইন্ডাষ্ট্রিয়াল পার্ক</h2>
-            <p>ভেড়াপোড়া, পবা, রাজশাহী</p>
+            <p>ভেড়াপোড়া, <b>পবা</b>, রাজশাহী</p>
             <h3>ইলেক্ট্রিক্যাল মেইন্টেনেন্স চেক লিস্ট</h3>
         </div>
 
@@ -355,7 +370,7 @@
             <tbody id="pdfTableBody"></tbody>
         </table>
 
-        <!-- Signature Block -->
+        <!-- Signature Block - Left & Right -->
         <div class="signature-container">
             <div class="signature-box">
                 <div class="signature-space"></div>
@@ -374,6 +389,30 @@
     </footer>
 
     <script>
+        // Project Dropdown Toggle & Selection Logic
+        function toggleProjectDropdown(show) {
+            const dropdown = document.getElementById('projectDropdown');
+            if (show) {
+                dropdown.classList.remove('hidden');
+            } else {
+                setTimeout(() => dropdown.classList.add('hidden'), 200);
+            }
+        }
+
+        function selectProject(projectName) {
+            document.getElementById('projectName').value = projectName;
+            document.getElementById('projectDropdown').classList.add('hidden');
+        }
+
+        // Hide dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            const projectInput = document.getElementById('projectName');
+            const dropdown = document.getElementById('projectDropdown');
+            if (projectInput && dropdown && !projectInput.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
         // 21 Questions Configuration Matrix
         const questionsData = [
             { id: 1, text: "সাব-স্টেশনের ডিভাইজ গুলোতে কোন সমস্যা আছে কিনা", category: "সাব-স্টেশন", issueOn: "Y" },
