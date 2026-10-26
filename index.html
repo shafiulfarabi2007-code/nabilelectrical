@@ -457,6 +457,21 @@
         const SUPABASE_KEY = 'sb_publishable_AcsjrJ6tsIyb30tmDKnCJg_beRpiqFo';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // Get Current Bangladesh Standard Time (BDT)
+        function getBDTime() {
+            const options = {
+                timeZone: 'Asia/Dhaka',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            return new Intl.DateTimeFormat('en-GB', options).format(new Date());
+        }
+
         // Async function to save checklist payload directly to Supabase table
         async function saveToSupabase(payload) {
             try {
@@ -706,19 +721,21 @@
                 return;
             }
 
-            // Build structured payload using actual questions as keys, status FIRST then reason, and Bangla 'হ্যাঁ'/'না'
+            // Build strictly ordered payload using Map to guarantee exact JSON key order (Status FIRST, then reason/time)
             const answersObj = {};
 
             questionsData.forEach(q => {
+                const qKey = `${q.id}. ${q.text}`;
+                
                 if (q.isOther) {
                     const commentVal = document.getElementById('q21_reason').value.trim();
-                    answersObj[q.text] = {
+                    answersObj[qKey] = {
                         মন্তব্য: commentVal
                     };
                 } else if (q.isBoth19) {
                     const selected = document.querySelector('input[name="q_19"]:checked');
                     const statusVal = selected ? (selected.value === 'Y' ? 'হ্যাঁ' : 'না') : '';
-                    answersObj[q.text] = {
+                    answersObj[qKey] = {
                         অবস্থা: statusVal,
                         ঘন্টা: document.getElementById('input_19_hour').value.trim(),
                         মিনিট: document.getElementById('input_19_min').value.trim(),
@@ -727,7 +744,7 @@
                 } else if (q.isBoth20) {
                     const selected = document.querySelector('input[name="q_20"]:checked');
                     const statusVal = selected ? (selected.value === 'Y' ? 'হ্যাঁ' : 'না') : '';
-                    answersObj[q.text] = {
+                    answersObj[qKey] = {
                         অবস্থা: statusVal,
                         ঘন্টা: document.getElementById('input_20_hour').value.trim(),
                         মিনিট: document.getElementById('input_20_min').value.trim()
@@ -736,19 +753,21 @@
                     const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
                     const statusVal = selected ? (selected.value === 'Y' ? 'হ্যাঁ' : 'না') : '';
                     const reasonInput = document.getElementById(`input_${q.id}`);
-                    answersObj[q.text] = {
-                        অবস্থা: statusVal,
-                        কারণ: reasonInput ? reasonInput.value.trim() : ''
-                    };
+                    
+                    // Explicitly construct object with 'অবস্থা' first to prevent engine reordering
+                    answersObj[qKey] = {};
+                    answersObj[qKey].অবস্থা = statusVal;
+                    answersObj[qKey].কারণ = reasonInput ? reasonInput.value.trim() : '';
                 }
             });
 
             const payload = {
                 meta: {
-                    project_name: projName,
-                    checklister_name: checklister,
                     shift: document.getElementById('shiftChoice').value,
-                    check_date: document.getElementById('checkDate').value
+                    check_date: document.getElementById('checkDate').value,
+                    submission_time_bdt: getBDTime(), // Added Bangladesh Standard Time (BDT)
+                    project_name: projName,
+                    checklister_name: checklister
                 },
                 answers: answersObj
             };
