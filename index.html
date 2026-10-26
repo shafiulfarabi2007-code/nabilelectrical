@@ -514,7 +514,7 @@
             { id: 5, text: "টেম্পারেচার ঠিক আছে কিনা", category: "কম্প্রেসর মেশিন", issueOn: "N" },
             { id: 6, text: "কম্প্রেসর মেশিনের মটর অতিরিক্ত গরম হয়েছে কিনা", category: null, issueOn: "Y" },
             { id: 7, text: "মটরের এম্পিয়ার ঠিক আছে কিনা", category: null, issueOn: "N" },
-            { id: 8, text: "এ এয়ার ড্রায়ার চলছে কিনা", category: null, issueOn: "N" },
+            { id: 8, text: "এয়ার ড্রায়ার চলছে কিনা", category: null, issueOn: "N" },
             { id: 9, text: "লাইন ফিল্টার গুলো ঠিক মত কাজ করছে কিনা", category: null, issueOn: "N" },
             { id: 10, text: "সকল মটর রানিং আছে কিনা", category: "মিল/ফ্যাক্টরী", issueOn: "N" },
             { id: 11, text: "কোন মটর অতিরিক্ত গরম হয়েছে কিনা", category: null, issueOn: "Y" },
@@ -706,7 +706,33 @@
                 return;
             }
 
-            // Build payload for Supabase Database
+            // Build perfectly sequential payload for Supabase Database
+            const answersObj = {};
+
+            // 1. Questions 1 to 18 (Status & Reason)
+            for (let i = 1; i <= 18; i++) {
+                const selected = document.querySelector(`input[name="q_${i}"]:checked`);
+                answersObj[`q${i}_status`] = selected ? selected.value : '';
+                const reasonInput = document.getElementById(`input_${i}`);
+                answersObj[`q${i}_reason`] = reasonInput ? reasonInput.value.trim() : '';
+            }
+
+            // 2. Question 19 (Status, Hours, Minutes, Reason)
+            const sel19 = document.querySelector('input[name="q_19"]:checked');
+            answersObj[`q19_status`] = sel19 ? sel19.value : '';
+            answersObj[`q19_hours`] = document.getElementById('input_19_hour').value.trim();
+            answersObj[`q19_minutes`] = document.getElementById('input_19_min').value.trim();
+            answersObj[`q19_reason`] = document.getElementById('input_19_reason').value.trim();
+
+            // 3. Question 20 (Status, Hours, Minutes)
+            const sel20 = document.querySelector('input[name="q_20"]:checked');
+            answersObj[`q20_status`] = sel20 ? sel20.value : '';
+            answersObj[`q20_hours`] = document.getElementById('input_20_hour').value.trim();
+            answersObj[`q20_minutes`] = document.getElementById('input_20_min').value.trim();
+
+            // 4. Question 21 (Comments)
+            answersObj[`q21_comments`] = document.getElementById('q21_reason').value.trim();
+
             const payload = {
                 meta: {
                     project_name: projName,
@@ -714,32 +740,8 @@
                     shift: document.getElementById('shiftChoice').value,
                     check_date: document.getElementById('checkDate').value
                 },
-                answers: {}
+                answers: answersObj
             };
-
-            questionsData.forEach(q => {
-                if (q.isOther) {
-                    payload.answers[`q21_comments`] = document.getElementById('q21_reason').value.trim();
-                } else if (q.isBoth19) {
-                    const selected = document.querySelector('input[name="q_19"]:checked');
-                    payload.answers[`q19_status`] = selected ? selected.value : '';
-                    payload.answers[`q19_hours`] = document.getElementById('input_19_hour').value.trim();
-                    payload.answers[`q19_minutes`] = document.getElementById('input_19_min').value.trim();
-                    payload.answers[`q19_reason`] = document.getElementById('input_19_reason').value.trim();
-                } else if (q.isBoth20) {
-                    const selected = document.querySelector('input[name="q_20"]:checked');
-                    payload.answers[`q20_status`] = selected ? selected.value : '';
-                    payload.answers[`q20_hours`] = document.getElementById('input_20_hour').value.trim();
-                    payload.answers[`q20_minutes`] = document.getElementById('input_20_min').value.trim();
-                } else {
-                    const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
-                    payload.answers[`q${q.id}_status`] = selected ? selected.value : '';
-                    const reasonInput = document.getElementById(`input_${q.id}`);
-                    if (reasonInput) {
-                        payload.answers[`q${q.id}_reason`] = reasonInput.value.trim();
-                    }
-                }
-            });
 
             // Automatically Save to Supabase in the Background
             saveToSupabase(payload);
