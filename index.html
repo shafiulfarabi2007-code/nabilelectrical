@@ -706,32 +706,41 @@
                 return;
             }
 
-            // Build perfectly sequential payload for Supabase Database
+            // Build perfectly ordered nested question structure for JSON Database
             const answersObj = {};
 
-            // 1. Questions 1 to 18 (Status & Reason)
+            // 1. Process Questions 1 to 18 sequentially (Status FIRST, then Reason)
             for (let i = 1; i <= 18; i++) {
                 const selected = document.querySelector(`input[name="q_${i}"]:checked`);
-                answersObj[`q${i}_status`] = selected ? selected.value : '';
                 const reasonInput = document.getElementById(`input_${i}`);
-                answersObj[`q${i}_reason`] = reasonInput ? reasonInput.value.trim() : '';
+                
+                answersObj[`q${i}`] = {
+                    status: selected ? selected.value : '',
+                    reason: reasonInput ? reasonInput.value.trim() : ''
+                };
             }
 
-            // 2. Question 19 (Status, Hours, Minutes, Reason)
+            // 2. Question 19 (Status FIRST, then Hours, Minutes, Reason)
             const sel19 = document.querySelector('input[name="q_19"]:checked');
-            answersObj[`q19_status`] = sel19 ? sel19.value : '';
-            answersObj[`q19_hours`] = document.getElementById('input_19_hour').value.trim();
-            answersObj[`q19_minutes`] = document.getElementById('input_19_min').value.trim();
-            answersObj[`q19_reason`] = document.getElementById('input_19_reason').value.trim();
+            answersObj['q19'] = {
+                status: sel19 ? sel19.value : '',
+                hours: document.getElementById('input_19_hour').value.trim(),
+                minutes: document.getElementById('input_19_min').value.trim(),
+                reason: document.getElementById('input_19_reason').value.trim()
+            };
 
-            // 3. Question 20 (Status, Hours, Minutes)
+            // 3. Question 20 (Status FIRST, then Hours, Minutes)
             const sel20 = document.querySelector('input[name="q_20"]:checked');
-            answersObj[`q20_status`] = sel20 ? sel20.value : '';
-            answersObj[`q20_hours`] = document.getElementById('input_20_hour').value.trim();
-            answersObj[`q20_minutes`] = document.getElementById('input_20_min').value.trim();
+            answersObj['q20'] = {
+                status: sel20 ? sel20.value : '',
+                hours: document.getElementById('input_20_hour').value.trim(),
+                minutes: document.getElementById('input_20_min').value.trim()
+            };
 
             // 4. Question 21 (Comments)
-            answersObj[`q21_comments`] = document.getElementById('q21_reason').value.trim();
+            answersObj['q21'] = {
+                comments: document.getElementById('q21_reason').value.trim()
+            };
 
             const payload = {
                 meta: {
