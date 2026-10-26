@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
         tailwind.config = {
@@ -444,12 +446,41 @@
             <!-- Copyright Text -->
             <div>
                 <p class="text-xs font-bold text-sky-900">© 2026 Nabil Industrial Park — Electrical Maintenance Department.</p>
-                <p class="text-[11px] text-slate-500 font-medium mt-0.5">Devoloped by <a href="https://photonixlab.netlify.app/" target="_blank"><b>Photonix Lab</b></a></p>
+                <p class="text-[11px] text-slate-500 font-medium mt-0.5">Powered by Nabil Group & NGI Corporate Division.</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Supabase Client Initialization
+        const SUPABASE_URL = 'https://wspsoqueuoxbdvvkelgb.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_AcsjrJ6tsIyb30tmDKnCJg_beRpiqFo';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Async function to save checklist payload directly to Supabase table
+        async function saveToSupabase(payload) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('checklists')
+                    .insert([
+                        {
+                            project_name: payload.meta.project_name,
+                            checklister_name: payload.meta.checklister_name,
+                            shift: payload.meta.shift,
+                            check_date: payload.meta.check_date,
+                            checklist_data: payload
+                        }
+                    ]);
+                if (error) {
+                    console.error('Supabase Error:', error.message);
+                } else {
+                    console.log('Successfully saved to Supabase database!');
+                }
+            } catch (err) {
+                console.error('Database connection error:', err);
+            }
+        }
+
         // Project Dropdown Toggle & Selection Logic
         function toggleProjectDropdown(show) {
             const dropdown = document.getElementById('projectDropdown');
@@ -483,7 +514,7 @@
             { id: 5, text: "টেম্পারেচার ঠিক আছে কিনা", category: "কম্প্রেসর মেশিন", issueOn: "N" },
             { id: 6, text: "কম্প্রেসর মেশিনের মটর অতিরিক্ত গরম হয়েছে কিনা", category: null, issueOn: "Y" },
             { id: 7, text: "মটরের এম্পিয়ার ঠিক আছে কিনা", category: null, issueOn: "N" },
-            { id: 8, text: "এয়ার ড্রায়ার চলছে কিনা", category: null, issueOn: "N" },
+            { id: 8, text: "এ এয়ার ড্রায়ার চলছে কিনা", category: null, issueOn: "N" },
             { id: 9, text: "লাইন ফিল্টার গুলো ঠিক মত কাজ করছে কিনা", category: null, issueOn: "N" },
             { id: 10, text: "সকল মটর রানিং আছে কিনা", category: "মিল/ফ্যাক্টরী", issueOn: "N" },
             { id: 11, text: "কোন মটর অতিরিক্ত গরম হয়েছে কিনা", category: null, issueOn: "Y" },
@@ -537,7 +568,7 @@
                     html += `
                         <div class="bg-white/95 p-4 rounded-xl border border-sky-100 shadow-sm hover:border-sky-300 transition-all space-y-3">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                <span class="font-semibold text-slate-800 text-sm sm:w-2/3">19.. ${q.text}</span>
+                                <span class="font-semibold text-slate-800 text-sm sm:w-2/3">19. ${q.text}</span>
                                 <div class="flex items-center gap-6">
                                     <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-sm">
                                         <input type="radio" name="q_19" value="Y" onchange="toggleReason(19)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
@@ -674,6 +705,44 @@
                 alert("অনুগ্রহ করে প্রজেক্টের নাম এবং চেকলিস্টার নাম প্রদান করুন।");
                 return;
             }
+
+            // Build payload for Supabase Database
+            const payload = {
+                meta: {
+                    project_name: projName,
+                    checklister_name: checklister,
+                    shift: document.getElementById('shiftChoice').value,
+                    check_date: document.getElementById('checkDate').value
+                },
+                answers: {}
+            };
+
+            questionsData.forEach(q => {
+                if (q.isOther) {
+                    payload.answers[`q21_comments`] = document.getElementById('q21_reason').value.trim();
+                } else if (q.isBoth19) {
+                    const selected = document.querySelector('input[name="q_19"]:checked');
+                    payload.answers[`q19_status`] = selected ? selected.value : '';
+                    payload.answers[`q19_hours`] = document.getElementById('input_19_hour').value.trim();
+                    payload.answers[`q19_minutes`] = document.getElementById('input_19_min').value.trim();
+                    payload.answers[`q19_reason`] = document.getElementById('input_19_reason').value.trim();
+                } else if (q.isBoth20) {
+                    const selected = document.querySelector('input[name="q_20"]:checked');
+                    payload.answers[`q20_status`] = selected ? selected.value : '';
+                    payload.answers[`q20_hours`] = document.getElementById('input_20_hour').value.trim();
+                    payload.answers[`q20_minutes`] = document.getElementById('input_20_min').value.trim();
+                } else {
+                    const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+                    payload.answers[`q${q.id}_status`] = selected ? selected.value : '';
+                    const reasonInput = document.getElementById(`input_${q.id}`);
+                    if (reasonInput) {
+                        payload.answers[`q${q.id}_reason`] = reasonInput.value.trim();
+                    }
+                }
+            });
+
+            // Automatically Save to Supabase in the Background
+            saveToSupabase(payload);
 
             // Fill Header Meta Values
             document.getElementById('pdfProjectName').innerText = projName;
